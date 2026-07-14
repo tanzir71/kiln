@@ -8,7 +8,7 @@
   A local-first macOS builder that turns plain-language prompts into real Mac apps and browser extensions.
 
   <a href="https://tanzir71.github.io/glaze-alt/">Website</a> ·
-  <a href="https://github.com/tanzir71/glaze-alt/releases/latest">Latest release</a> ·
+  <a href="https://github.com/tanzir71/kiln/raw/refs/heads/main/release/Kiln-0.1.0-arm64.dmg">Download for Mac</a> ·
   <a href="SPEC.md">Specification</a>
 </div>
 

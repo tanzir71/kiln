@@ -1119,12 +1119,14 @@ img {
 }
 
 .step-card {
+  --step-inline-start: 0px;
   position: relative;
   min-height: 420px;
   padding: 0 38px 0 0;
 }
 
 .step-card + .step-card {
+  --step-inline-start: 38px;
   padding-left: 38px;
   border-left: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -1145,7 +1147,7 @@ img {
   position: absolute;
   top: 18px;
   right: -1px;
-  left: 55px;
+  left: calc(var(--step-inline-start) + 55px);
   height: 1px;
   background: linear-gradient(90deg, rgba(255, 114, 91, 0.6), rgba(255, 255, 255, 0.08));
 }
@@ -1157,6 +1159,7 @@ img {
 }
 
 .step-card p {
+  min-height: 4.95em;
   margin: 13px 0 0;
   color: rgba(255, 255, 255, 0.56);
   font-size: 15px;
@@ -1708,6 +1711,10 @@ img {
 
   .step-card h3 {
     margin-top: 28px;
+  }
+
+  .step-card p {
+    min-height: 0;
   }
 
   .step-example {

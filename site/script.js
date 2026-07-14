@@ -1,4 +1,5 @@
-const fallbackRepository = 'https://github.com/tanzir71/glaze-alt';
+const fallbackRepository = 'https://github.com/tanzir71/kiln';
+const dmgPath = 'release/Kiln-0.1.0-arm64.dmg';
 
 function repositoryUrl() {
   const { hostname, pathname } = window.location;
@@ -8,6 +9,10 @@ function repositoryUrl() {
     const [repository] = pathname.split('/').filter(Boolean);
 
     if (owner && repository) {
+      if (owner === 'tanzir71' && repository === 'glaze-alt') {
+        return fallbackRepository;
+      }
+
       return `https://github.com/${owner}/${repository}`;
     }
   }
@@ -19,7 +24,9 @@ const repository = repositoryUrl();
 
 document.querySelectorAll('[data-repo-link]').forEach((link) => {
   const destination = link.dataset.repoLink;
-  link.href = destination === 'release' ? `${repository}/releases/latest` : repository;
+  link.href = destination === 'dmg'
+    ? `${repository}/raw/refs/heads/main/${dmgPath}`
+    : repository;
 });
 
 document.querySelector('[data-year]').textContent = String(new Date().getFullYear());

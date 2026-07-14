@@ -1,6 +1,7 @@
 node_modules/
 out/
-release/
+release/*
+!release/Kiln-0.1.0-arm64.dmg
 coverage/
 resources/icon.iconset/
 .DS_Store
