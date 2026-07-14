@@ -15,7 +15,7 @@
 ![Kiln creating a pomodoro app from a prompt](site/assets/og.png)
 
 > [!NOTE]
-> Kiln is an early macOS release for Apple silicon. The current desktop package is unsigned, so macOS may require **right-click → Open** on first launch.
+> Kiln is an early macOS release for Apple silicon. The package is validly ad-hoc signed, but it is not registered or notarized by Apple. On first launch, macOS requires approval in **System Settings → Privacy & Security → Open Anyway**.
 
 ## What is Kiln?
 
@@ -95,7 +95,23 @@ The end-to-end suite creates disposable projects and may invoke installed agent 
 npm run dist
 ```
 
-The Apple-silicon DMG and ZIP are written to `release/`. The default build is unsigned and intended for local testing and direct distribution.
+The Apple-silicon DMG and ZIP are written to `release/`. Builds are ad-hoc signed so their bundle signatures remain valid when shared. Without a paid Apple Developer Program membership, recipients must approve the app once in **System Settings → Privacy & Security → Open Anyway**.
+
+## Package a notarized release
+
+Public releases require a `Developer ID Application` certificate plus one notarization credential strategy supported by `notarytool`:
+
+- `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, and `APPLE_TEAM_ID`;
+- `APPLE_API_KEY` (the `.p8` path), `APPLE_API_KEY_ID`, and `APPLE_API_ISSUER`; or
+- a credential profile stored with `xcrun notarytool store-credentials`, exposed as `APPLE_KEYCHAIN_PROFILE`.
+
+Then run:
+
+```bash
+npm run dist:notarized
+```
+
+The notarized release command refuses to build without the required credentials. It signs with hardened runtime, notarizes and staples the app and DMG, verifies the disk image, and requires Gatekeeper assessment to pass before reporting success.
 
 ## Project structure
 

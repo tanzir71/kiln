@@ -80,10 +80,13 @@ describe.skipIf(!enabled)('prompt to DMG acceptance', () => {
     try {
       const appName = (await readdir(mountpoint)).find((name) => name.endsWith('.app'));
       expect(appName).toBeTruthy();
+      const packagedApp = join(mountpoint, appName!);
+      const signature = await runCommand('/usr/bin/codesign', ['--verify', '--deep', '--strict', '--verbose=4', packagedApp]);
+      expect(signature.code, `${signature.stdout}\n${signature.stderr}`).toBe(0);
       const installedDir = join(temporary, 'Applications');
       await mkdir(installedDir);
       const installed = join(installedDir, appName!);
-      await cp(join(mountpoint, appName!), installed, { recursive: true });
+      await cp(packagedApp, installed, { recursive: true });
       expect((await runCommand('/usr/bin/open', [installed])).code).toBe(0);
       await pause(4_000);
       const process = await runCommand('/usr/bin/pgrep', ['-f', installed]);

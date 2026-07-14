@@ -59,7 +59,20 @@ describe.skipIf(!enabled)('generated app template acceptance', () => {
     const distResult = await runCommand('npm', ['run', 'dist'], { cwd: project, timeoutMs: 20 * 60_000, env: { CSC_IDENTITY_AUTO_DISCOVERY: 'false' } });
     expectOk(distResult);
     const distNames = await readdir(join(project, 'dist'));
-    expect(distNames.some((name) => name.endsWith('.dmg')), `${distNames.join(', ')}\n${distResult.stdout}\n${distResult.stderr}`).toBe(true);
+    const dmgName = distNames.find((name) => name.endsWith('.dmg'));
+    expect(dmgName, `${distNames.join(', ')}\n${distResult.stdout}\n${distResult.stderr}`).toBeTruthy();
+    const dmg = join(project, 'dist', dmgName!);
+    expectOk(await runCommand('/usr/bin/hdiutil', ['verify', dmg], { timeoutMs: 60_000 }));
+    const mountpoint = join(root, 'template-mounted');
+    await mkdir(mountpoint);
+    expectOk(await runCommand('/usr/bin/hdiutil', ['attach', '-readonly', '-nobrowse', '-mountpoint', mountpoint, dmg], { timeoutMs: 60_000 }));
+    try {
+      const appName = (await readdir(mountpoint)).find((name) => name.endsWith('.app'));
+      expect(appName).toBeTruthy();
+      expectOk(await runCommand('/usr/bin/codesign', ['--verify', '--deep', '--strict', '--verbose=4', join(mountpoint, appName!)]));
+    } finally {
+      expectOk(await runCommand('/usr/bin/hdiutil', ['detach', '-force', mountpoint], { timeoutMs: 60_000 }));
+    }
   }, 30 * 60_000);
 
   it('copies, installs, typechecks, and builds the extension template', async () => {

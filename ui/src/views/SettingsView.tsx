@@ -61,9 +61,9 @@ export default function SettingsView() {
             <div>
               <div className="lbl">Developer ID signing identity</div>
               <div className="desc">
-                Optional. Without it, apps are ad-hoc signed: they run fine on this Mac, but other Macs
-                need right-click → Open on first launch. With a Developer ID certificate, exports are
-                signed and notarized for frictionless sharing.
+                Optional. Without it, Kiln creates and verifies an ad-hoc signature; other Macs require
+                System Settings → Privacy &amp; Security → Open Anyway on first launch. Only a Developer ID
+                Application certificate can provide frictionless sharing.
               </div>
             </div>
             <input

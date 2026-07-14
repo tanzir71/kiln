@@ -11,7 +11,9 @@
     "dev": "electron-vite dev",
     "start": "electron-vite preview",
     "build": "electron-vite build",
-    "dist": "npm run build && electron-builder --mac dmg zip --arm64",
+    "dist": "npm run dist:local",
+    "dist:local": "npm run build && electron-builder --mac dmg zip --arm64 --config.forceCodeSigning=false --config.mac.identity=- --config.mac.hardenedRuntime=false --config.mac.notarize=false",
+    "dist:notarized": "node scripts/release.mjs",
     "typecheck": "tsc --noEmit && npm --prefix ui run typecheck",
     "lint": "eslint src e2e harness --ext .ts,.tsx --max-warnings=0",
     "test": "vitest run",
@@ -25,6 +27,7 @@
     "sharp": "0.35.3"
   },
   "devDependencies": {
+    "@electron/notarize": "3.1.1",
     "@playwright/test": "1.61.1",
     "@types/node": "22.20.1",
     "@typescript-eslint/eslint-plugin": "8.64.0",
@@ -42,6 +45,7 @@
   "build": {
     "appId": "dev.kiln.builder",
     "productName": "Kiln",
+    "forceCodeSigning": true,
     "asar": true,
     "directories": {
       "output": "release"
@@ -75,8 +79,10 @@
       ],
       "category": "public.app-category.developer-tools",
       "icon": "resources/icon.icns",
-      "identity": null,
-      "hardenedRuntime": false
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.inherit.plist",
+      "notarize": true
     }
   }
 }

@@ -334,6 +334,42 @@ img {
   letter-spacing: 0.025em;
 }
 
+.install-note {
+  width: min(100%, 650px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px auto 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(23, 21, 18, 0.12);
+  border-radius: 12px;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.46);
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.install-note strong {
+  flex: 0 0 auto;
+  color: var(--ink);
+}
+
+.install-note span {
+  flex: 1;
+}
+
+.install-note a {
+  flex: 0 0 auto;
+  color: var(--coral-deep);
+  font-weight: 750;
+}
+
+.install-note a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .product-wrap {
   position: relative;
   margin-top: 74px;
@@ -1768,6 +1804,12 @@ img {
   .hero-actions .button,
   .closing-actions .button {
     width: 100%;
+  }
+
+  .install-note {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
   }
 
   .product-window {

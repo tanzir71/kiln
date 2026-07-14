@@ -1,5 +1,5 @@
 const fallbackRepository = 'https://github.com/tanzir71/kiln';
-const dmgPath = 'release/Kiln-0.1.0-arm64.dmg';
+const dmgUrl = 'https://github.com/tanzir71/kiln/raw/refs/heads/main/release/Kiln-0.1.0-arm64.dmg';
 
 function repositoryUrl() {
   const { hostname, pathname } = window.location;
@@ -25,7 +25,7 @@ const repository = repositoryUrl();
 document.querySelectorAll('[data-repo-link]').forEach((link) => {
   const destination = link.dataset.repoLink;
   link.href = destination === 'dmg'
-    ? `${repository}/raw/refs/heads/main/${dmgPath}`
+    ? dmgUrl
     : repository;
 });
 

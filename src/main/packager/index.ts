@@ -1,4 +1,5 @@
-import { copyFile, readdir, writeFile } from 'node:fs/promises';
+import { copyFile, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { ExportResult } from '../../../ui/src/types';
 import type { ProjectRecord } from '../projects/registry';
@@ -9,6 +10,12 @@ import { runCommand } from '../util/process';
 function bump(version: string): string {
   const [major = '1', minor = '0', patch = '0'] = version.split('.');
   return `${Number(major)}.${Number(minor)}.${Number(patch.replace(/\D.*$/, '')) + 1}`;
+}
+
+export function validateSigningIdentity(identity?: string): void {
+  if (identity && !identity.startsWith('Developer ID Application:')) {
+    throw new Error('Only a Developer ID Application identity can be used for public signing. Leave the field blank for a verified ad-hoc export.');
+  }
 }
 
 export class ProjectPackager {
@@ -41,11 +48,13 @@ export class ProjectPackager {
 
   private async exportMac(project: ProjectRecord, destination: string, version: string): Promise<ExportResult> {
     const settings = await this.settings.get();
+    const signingIdentity = settings.signingIdentity?.trim() || undefined;
+    validateSigningIdentity(signingIdentity);
     let result;
-    if (settings.signingIdentity) {
+    if (signingIdentity) {
       const args = [
         'electron-builder', '--mac', 'dmg', 'zip', '--arm64',
-        `--config.mac.identity=${settings.signingIdentity}`,
+        `--config.mac.identity=${signingIdentity}`,
         '--config.mac.hardenedRuntime=true',
         '--config.mac.entitlements=build/entitlements.mac.plist',
       ];
@@ -60,13 +69,49 @@ export class ProjectPackager {
     const names = (await readdir(join(project.path, 'dist'))).filter((name) => name.endsWith('.dmg'));
     if (!names.length) throw new Error('electron-builder completed without producing a DMG');
     const dmg = names[0];
+    const sourceDmg = join(project.path, 'dist', dmg);
+    await this.verifyMacDmg(sourceDmg, settings.notarize);
     const artifact = join(destination, `${project.slug}-${version}.dmg`);
-    await copyFile(join(project.path, 'dist', dmg), artifact);
+    await copyFile(sourceDmg, artifact);
     const readme = join(destination, `${project.slug}-${version}-README-INSTALL.txt`);
+    const signingNote = signingIdentity
+      ? settings.notarize
+        ? 'This app is Developer ID signed and notarized by Apple.'
+        : 'This app is Developer ID signed but not notarized. macOS may require first-launch approval.'
+      : 'This app is ad-hoc signed and not registered with Apple. On another Mac, try to open it once, then go to System Settings → Privacy & Security and click Open Anyway.';
     await writeFile(readme,
-      `${project.name} ${version}\n\nOpen the DMG and drag ${project.name} to Applications.\n\nThis export is ad-hoc signed. On another Mac, first launch may require right-clicking the app and choosing Open. If macOS still blocks it, run: xattr -d com.apple.quarantine "/Applications/${project.name}.app"\n`,
+      `${project.name} ${version}\n\nOpen the DMG and drag ${project.name} to Applications.\n\nKiln verified the disk image checksum and the app's complete code signature before export. ${signingNote}\n`,
     );
     return { ok: true, artifacts: [artifact, readme] };
+  }
+
+  private async verifyMacDmg(dmgPath: string, requireGatekeeperApproval: boolean): Promise<void> {
+    if (process.platform !== 'darwin') throw new Error('DMG verification requires macOS');
+
+    const image = await runCommand('/usr/bin/hdiutil', ['verify', dmgPath], { timeoutMs: 2 * 60_000 });
+    if (image.code !== 0) throw new Error(`DMG checksum verification failed:\n${image.stderr || image.stdout}`);
+
+    const mountpoint = await mkdtemp(join(tmpdir(), 'kiln-export-verify-'));
+    let attached = false;
+    try {
+      const attach = await runCommand('/usr/bin/hdiutil', ['attach', '-readonly', '-nobrowse', '-mountpoint', mountpoint, dmgPath], { timeoutMs: 2 * 60_000 });
+      if (attach.code !== 0) throw new Error(`DMG mount verification failed:\n${attach.stderr || attach.stdout}`);
+      attached = true;
+
+      const apps = (await readdir(mountpoint)).filter((name) => name.endsWith('.app'));
+      if (apps.length !== 1) throw new Error(`Expected one app in the DMG, found ${apps.length}`);
+      const appPath = join(mountpoint, apps[0]);
+      const signature = await runCommand('/usr/bin/codesign', ['--verify', '--deep', '--strict', '--verbose=4', appPath], { timeoutMs: 2 * 60_000 });
+      if (signature.code !== 0) throw new Error(`Packaged app signature verification failed:\n${signature.stderr || signature.stdout}`);
+
+      if (requireGatekeeperApproval) {
+        const gatekeeper = await runCommand('/usr/sbin/spctl', ['--assess', '--type', 'execute', '--verbose=4', appPath], { timeoutMs: 2 * 60_000 });
+        if (gatekeeper.code !== 0) throw new Error(`Notarized app failed Gatekeeper assessment:\n${gatekeeper.stderr || gatekeeper.stdout}`);
+      }
+    } finally {
+      if (attached) await runCommand('/usr/bin/hdiutil', ['detach', '-force', mountpoint], { timeoutMs: 2 * 60_000 });
+      await rm(mountpoint, { recursive: true, force: true });
+    }
   }
 
   private async exportExtension(project: ProjectRecord, destination: string, version: string): Promise<ExportResult> {
