@@ -44,6 +44,12 @@ export default function App() {
             <span className="badge">{current.type === 'mac-app' ? 'Mac App' : 'Extension'}</span>
           )}
           <div className="titlebar-spacer" />
+          <div className="app-credit" aria-label="Creator links">
+            <span>built by</span>
+            <a href="https://tanziro.com/" target="_blank" rel="noreferrer">tanziro.com</a>
+            <span aria-hidden="true">·</span>
+            <a href="https://buymeacoffee.com/tanzir" target="_blank" rel="noreferrer">buy me a coffee</a>
+          </div>
           {route.view === 'home' && (
             <button className="btn ghost icon" title="Settings" onClick={() => setRoute({ view: 'settings' })}>
               <SettingsIcon size={15} />

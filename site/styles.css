@@ -1620,6 +1620,32 @@ img {
   font-size: 11px;
 }
 
+.footer-meta {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+}
+
+.footer-credit {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.footer-credit a {
+  color: var(--ink-soft);
+  font-weight: 650;
+}
+
+.footer-credit a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .reveal {
   opacity: 1;
   transform: none;
@@ -1916,8 +1942,16 @@ img {
     grid-template-columns: 1fr;
   }
 
-  .footer-row > p:last-child {
+  .footer-meta {
+    grid-row: 3;
+    align-items: flex-start;
     justify-self: start;
+    text-align: left;
+  }
+
+  .footer-credit {
+    flex-wrap: wrap;
+    white-space: normal;
   }
 }
 
