@@ -1,0 +1,82 @@
+{
+  "name": "kiln",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./out/main/index.js",
+  "workspaces": [
+    "ui"
+  ],
+  "scripts": {
+    "dev": "electron-vite dev",
+    "start": "electron-vite preview",
+    "build": "electron-vite build",
+    "dist": "npm run build && electron-builder --mac dmg zip --arm64",
+    "typecheck": "tsc --noEmit && npm --prefix ui run typecheck",
+    "lint": "eslint src e2e harness --ext .ts,.tsx --max-warnings=0",
+    "test": "vitest run",
+    "test:e2e": "KILN_E2E=1 vitest run e2e",
+    "check": "npm run typecheck && npm run lint && npm run test && npm --prefix ui run build",
+    "icons:kiln": "tsx harness/icons/compose.ts --name Kiln --target mac --out resources"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "0.3.208",
+    "playwright": "1.61.1",
+    "sharp": "0.35.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@types/node": "22.20.1",
+    "@typescript-eslint/eslint-plugin": "8.64.0",
+    "@typescript-eslint/parser": "8.64.0",
+    "@vitejs/plugin-react": "5.2.0",
+    "electron": "43.1.0",
+    "electron-builder": "26.15.3",
+    "electron-vite": "5.0.0",
+    "eslint": "8.57.1",
+    "tsx": "4.23.1",
+    "typescript": "5.6.3",
+    "vite": "7.3.6",
+    "vitest": "4.1.10"
+  },
+  "build": {
+    "appId": "dev.kiln.builder",
+    "productName": "Kiln",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "templates",
+        "to": "templates"
+      },
+      {
+        "from": "harness",
+        "to": "harness",
+        "filter": [
+          "**/*",
+          "!**/*.test.ts"
+        ]
+      },
+      {
+        "from": "resources",
+        "to": "resources"
+      }
+    ],
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.developer-tools",
+      "icon": "resources/icon.icns",
+      "identity": null,
+      "hardenedRuntime": false
+    }
+  }
+}

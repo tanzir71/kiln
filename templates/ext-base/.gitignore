@@ -1,0 +1,6 @@
+node_modules/
+.output/
+.wxt/
+.kiln/
+.DS_Store
+*.log

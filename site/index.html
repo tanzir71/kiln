@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f0e8" />
+    <meta
+      name="description"
+      content="Kiln turns a plain-language prompt into a real Mac app or browser extension—built locally with Claude or Codex."
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kiln — Describe it. Kiln builds the app." />
+    <meta
+      property="og:description"
+      content="An open, local-first builder for Mac apps and browser extensions."
+    />
+    <meta property="og:url" content="https://tanzir71.github.io/glaze-alt/" />
+    <meta property="og:image" content="https://tanzir71.github.io/glaze-alt/assets/og.png" />
+    <meta property="og:image:width" content="1729" />
+    <meta property="og:image:height" content="910" />
+    <meta property="og:image:alt" content="Kiln builder creating a pomodoro timer from a prompt" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kiln — Describe it. Kiln builds the app." />
+    <meta
+      name="twitter:description"
+      content="An open, local-first builder for Mac apps and browser extensions."
+    />
+    <meta name="twitter:image" content="https://tanzir71.github.io/glaze-alt/assets/og.png" />
+
+    <title>Kiln — Describe it. Kiln builds the app.</title>
+    <link rel="icon" type="image/png" href="./assets/icon.png" />
+    <link rel="apple-touch-icon" href="./assets/icon.png" />
+    <script>document.documentElement.classList.add('has-js');</script>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="shell nav-row">
+        <a class="brand" href="#top" aria-label="Kiln home">
+          <img src="./assets/icon.png" alt="" width="38" height="38" />
+          <span>Kiln</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#why">Why Kiln</a>
+          <a href="#how">How it works</a>
+          <a href="#formats">What it builds</a>
+        </nav>
+
+        <a class="button button-small button-dark" href="#" data-repo-link="root">
+          View on GitHub
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+        <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+
+        <div class="shell hero-copy">
+          <div class="eyebrow reveal">
+            <span class="status-dot" aria-hidden="true"></span>
+            Open, local-first software builder
+          </div>
+          <h1 class="reveal">Describe it.<br /><span>Kiln builds the app.</span></h1>
+          <p class="hero-lede reveal">
+            Turn one plain-language prompt into a real Mac app or browser extension.
+            Build with Claude or Codex, iterate in chat, and keep every line of code.
+          </p>
+          <div class="hero-actions reveal">
+            <a class="button button-primary" href="#" data-repo-link="release">
+              Download for Mac
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a class="button button-quiet" href="#how">
+              See how it works
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <p class="hero-note reveal">Apple silicon · Your model · Your machine · No credits</p>
+        </div>
+
+        <div class="shell product-wrap reveal">
+          <div class="product-orbit" aria-hidden="true"></div>
+          <div class="product-window" aria-label="Preview of the Kiln app builder">
+            <div class="window-bar">
+              <div class="traffic-lights" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="window-title">Pomodoro</div>
+              <div class="window-badge">Mac app</div>
+            </div>
+
+            <div class="workbench">
+              <aside class="project-rail">
+                <div class="rail-label">Projects</div>
+                <div class="rail-card is-active">
+                  <div class="mini-app coral">25</div>
+                  <div><strong>Pomodoro</strong><span>Just now</span></div>
+                </div>
+                <div class="rail-card">
+                  <div class="mini-app sage">€</div>
+                  <div><strong>Price Peek</strong><span>Yesterday</span></div>
+                </div>
+                <div class="rail-card">
+                  <div class="mini-app ink">Aa</div>
+                  <div><strong>Rewrite</strong><span>2 days ago</span></div>
+                </div>
+                <div class="new-project"><span>＋</span> New project</div>
+              </aside>
+
+              <section class="chat-panel" aria-label="Build conversation">
+                <div class="panel-head"><span>Build</span><span class="model-pill">Codex</span></div>
+                <div class="chat-scroll">
+                  <div class="message message-user">
+                    Make a focused pomodoro timer with a menu bar countdown and a soft alert.
+                  </div>
+                  <div class="agent-line">
+                    <img src="./assets/icon.png" alt="" width="22" height="22" />
+                    <strong>Kiln</strong>
+                  </div>
+                  <div class="build-list">
+                    <div><span class="check">✓</span><span>Planned the app structure</span></div>
+                    <div><span class="check">✓</span><span>Built timer and menu bar bridge</span></div>
+                    <div><span class="check">✓</span><span>Validated and saved version 1</span></div>
+                  </div>
+                  <p class="agent-copy">Done — the timer is running in preview. Your first build is saved as <strong>v1</strong>.</p>
+                </div>
+                <div class="prompt-box">
+                  <span data-prompt-text>Now add a long-break setting…</span>
+                  <button type="button" tabindex="-1" aria-hidden="true">↑</button>
+                </div>
+              </section>
+
+              <section class="preview-panel" aria-label="Generated app preview">
+                <div class="panel-head">
+                  <div class="preview-tabs"><span class="is-active">Preview</span><span>Versions</span><span>Files</span></div>
+                  <div class="preview-actions"><span>Run</span><strong>Export DMG</strong></div>
+                </div>
+                <div class="preview-stage">
+                  <div class="generated-app">
+                    <div class="generated-bar">
+                      <div class="micro-lights"><span></span><span></span><span></span></div>
+                      <span>Pomodoro</span>
+                      <button type="button" tabindex="-1">Settings</button>
+                    </div>
+                    <div class="timer-body">
+                      <div class="timer-label">FOCUS SESSION</div>
+                      <div class="timer-ring">
+                        <div><strong>25:00</strong><span>minutes remaining</span></div>
+                      </div>
+                      <button class="timer-button" type="button" tabindex="-1">Start focus</button>
+                      <div class="session-dots" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                    </div>
+                  </div>
+                  <div class="live-pill"><span></span> Live preview</div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="proof-strip" aria-label="Kiln principles">
+        <div class="shell proof-row">
+          <span>Built on your Mac</span>
+          <span class="proof-divider" aria-hidden="true"></span>
+          <span>Claude or Codex</span>
+          <span class="proof-divider" aria-hidden="true"></span>
+          <span>Git versioned</span>
+          <span class="proof-divider" aria-hidden="true"></span>
+          <span>Export real software</span>
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="shell">
+          <div class="section-heading reveal">
+            <p class="kicker">Why Kiln</p>
+            <h2>Software should fit you.<br />Not the other way around.</h2>
+            <p>Build the tiny utility, personal workflow, or browser tool that nobody else would make for you.</p>
+          </div>
+
+          <div class="benefit-grid">
+            <article class="benefit-card benefit-card-large reveal">
+              <div class="card-number">01</div>
+              <div class="ownership-visual" aria-hidden="true">
+                <div class="file-card file-card-back"><span>v1</span></div>
+                <div class="file-card file-card-mid"><span>v2</span></div>
+                <div class="file-card file-card-front"><span>v3</span><strong>Your code</strong><small>Saved locally</small></div>
+              </div>
+              <div class="benefit-copy">
+                <h3>Own the whole thing.</h3>
+                <p>Every project is a normal workspace on your Mac. Every successful edit becomes a version you can inspect or restore.</p>
+              </div>
+            </article>
+
+            <article class="benefit-card reveal">
+              <div class="card-number">02</div>
+              <div class="model-stack" aria-hidden="true">
+                <div><span>C</span><strong>Claude</strong></div>
+                <div><span>O</span><strong>Codex</strong></div>
+              </div>
+              <div class="benefit-copy">
+                <h3>Bring your model.</h3>
+                <p>Use your Claude or ChatGPT subscription through the official CLI, or connect your own API key.</p>
+              </div>
+            </article>
+
+            <article class="benefit-card reveal">
+              <div class="card-number">03</div>
+              <div class="local-visual" aria-hidden="true">
+                <div class="local-orbit orbit-one"></div>
+                <div class="local-orbit orbit-two"></div>
+                <div class="local-core"><img src="./assets/icon.png" alt="" /></div>
+              </div>
+              <div class="benefit-copy">
+                <h3>Local at the core.</h3>
+                <p>Your projects, previews, versions, and packaged apps stay on your machine—not in a hosted workspace.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-dark" id="how">
+        <div class="shell">
+          <div class="section-heading section-heading-light reveal">
+            <p class="kicker">How it works</p>
+            <h2>From “what if?” to a real app.</h2>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step-card reveal">
+              <span class="step-number">1</span>
+              <div class="step-line" aria-hidden="true"></div>
+              <h3>Describe</h3>
+              <p>Say what you want in plain language. Pick a Mac app or browser extension—or let Kiln infer it.</p>
+              <div class="step-example">“A menu bar app that reminds me to look away every 20 minutes.”</div>
+            </article>
+            <article class="step-card reveal">
+              <span class="step-number">2</span>
+              <div class="step-line" aria-hidden="true"></div>
+              <h3>Shape</h3>
+              <p>Watch the agent build, run, and validate it. Ask for changes in the same chat and revisit any version.</p>
+              <div class="step-example step-log"><span>✓</span> Typecheck <span>✓</span> Lint <span>✓</span> Preview</div>
+            </article>
+            <article class="step-card reveal">
+              <span class="step-number">3</span>
+              <h3>Ship</h3>
+              <p>Export a Mac installer or store-ready extension package. The result is yours to run, share, and keep editing.</p>
+              <div class="step-example artifact"><span>DMG</span><span>ZIP</span><strong>Ready</strong></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section formats-section" id="formats">
+        <div class="shell">
+          <div class="section-heading reveal">
+            <p class="kicker">One builder, two canvases</p>
+            <h2>Make the software your day is missing.</h2>
+          </div>
+
+          <div class="format-grid">
+            <article class="format-card format-mac reveal">
+              <div class="format-topline"><span>Mac apps</span><small>Electron + React</small></div>
+              <h3>Native-feeling tools<br />with real OS access.</h3>
+              <p>Files, shortcuts, notifications, menu bar utilities, background work, and more—packaged as a DMG.</p>
+              <div class="format-window mac-mini" aria-hidden="true">
+                <div class="mini-titlebar"><span></span><span></span><span></span><small>Daily Drop</small></div>
+                <div class="drop-content"><strong>Drop anything here.</strong><span>Files are sorted automatically.</span><div>＋ Add rule</div></div>
+              </div>
+            </article>
+
+            <article class="format-card format-extension reveal">
+              <div class="format-topline"><span>Browser extensions</span><small>WXT + React</small></div>
+              <h3>Small powers for<br />every page you visit.</h3>
+              <p>Popups, content scripts, context menus, storage, and browser automations—ready for Chrome and Firefox.</p>
+              <div class="browser-mini" aria-hidden="true">
+                <div class="browser-bar"><span></span><span></span><span></span><div>example.com</div></div>
+                <div class="browser-page"><i></i><i></i><i></i><div class="extension-pop"><b>Price Peek</b><strong>$84.00</strong><span>Best price this month</span></div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing-section">
+        <div class="closing-grid" aria-hidden="true"></div>
+        <div class="closing-glow" aria-hidden="true"></div>
+        <div class="shell closing-copy reveal">
+          <img src="./assets/icon.png" alt="" width="72" height="72" />
+          <p class="kicker">Kiln v0.1</p>
+          <h2>Your next app is<br />one sentence away.</h2>
+          <p>Download Kiln for Apple silicon, or open the source and make the builder your own.</p>
+          <div class="closing-actions">
+            <a class="button button-white" href="#" data-repo-link="release">Download for Mac <span aria-hidden="true">↓</span></a>
+            <a class="button button-outline" href="#" data-repo-link="root">View source <span aria-hidden="true">↗</span></a>
+          </div>
+          <small>Free to inspect · Local-first · No account required</small>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-row">
+        <a class="brand brand-footer" href="#top">
+          <img src="./assets/icon.png" alt="" width="30" height="30" />
+          <span>Kiln</span>
+        </a>
+        <p>Make software that fits.</p>
+        <div class="footer-links">
+          <a href="#why">Why Kiln</a>
+          <a href="#how">How it works</a>
+          <a href="#" data-repo-link="root">GitHub</a>
+        </div>
+        <p>© <span data-year>2026</span> Kiln</p>
+      </div>
+    </footer>
+  </body>
+</html>

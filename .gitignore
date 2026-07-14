@@ -1,0 +1,12 @@
+node_modules/
+out/
+release/
+coverage/
+resources/icon.iconset/
+.DS_Store
+*.log
+templates/*/node_modules/
+templates/*/dist/
+templates/*/out/
+templates/ext-base/.output/
+templates/ext-base/.wxt/

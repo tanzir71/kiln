@@ -1,0 +1,28 @@
+appId: __APP_ID__
+productName: __APP_NAME__
+asar: true
+directories:
+  output: dist
+files:
+  - out/**/*
+  - package.json
+extraResources:
+  - from: resources/icon.png
+    to: icon.png
+asarUnpack:
+  - "**/node_modules/{ffmpeg-static,sharp,better-sqlite3}/**/*"
+mac:
+  target:
+    - target: dmg
+      arch: [arm64]
+    - target: zip
+      arch: [arm64]
+  icon: resources/icon.icns
+  identity: "-"
+  hardenedRuntime: false
+  category: public.app-category.utilities
+  extendInfo:
+    NSMicrophoneUsageDescription: __APP_NAME__ uses the microphone only when you request an audio feature.
+    NSCameraUsageDescription: __APP_NAME__ uses the camera only when you request a camera feature.
+    NSScreenCaptureUsageDescription: __APP_NAME__ captures the screen only when you request it.
+    NSAppleEventsUsageDescription: __APP_NAME__ controls other apps only when you request an automation feature.
