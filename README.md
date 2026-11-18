@@ -7,7 +7,7 @@
 
   A local-first macOS builder that turns plain-language prompts into real Mac apps and browser extensions.
 
-  <a href="https://tanzir71.github.io/glaze-alt/">Website</a> ·
+  <a href="https://tanzir71.github.io/kiln/">Website</a> ·
   <a href="https://github.com/tanzir71/kiln/raw/refs/heads/main/release/Kiln-0.1.0-arm64.dmg">Download for Mac</a> ·
   <a href="SPEC.md">Specification</a>
 </div>
@@ -158,7 +158,3 @@ The implementation milestones in [`SPEC.md`](SPEC.md) are complete. See [`PROGRE
 ## Acknowledgements
 
 Kiln is inspired by [Glaze by Raycast](https://www.glaze.app/) and the idea that personal software should be as easy to shape as a conversation. Kiln is an independent project and is not affiliated with Raycast.
-
-## License
-
-A project license has not been specified yet.
